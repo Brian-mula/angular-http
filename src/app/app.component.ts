@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { PostsService } from './posts.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,12 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'forms';
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+    private postService:PostsService
+    ) { }
 
   submitForm(form: NgForm): void {
-    this.http.post('https://blog-7f459-default-rtdb.firebaseio.com/posts.json',form.value).subscribe(res=>{
-      console.log(res);
-    })
+    this.postService.createPost(form.value);
     console.log(form.value);
   }
 }
